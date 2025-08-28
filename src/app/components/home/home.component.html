@@ -1,0 +1,158 @@
+<header class="app-header">
+  <div class="logo">BIOWALK</div>
+  <nav class="main-nav">
+    <ul>
+      </ul>
+  </nav>
+  <div class="user-actions">
+    <button (click)="logout()">Sair</button>
+  </div>
+</header>
+
+<div class="add-button-container" style="align-items: center;">
+  <button *ngIf="isSector('Administrativo')" class="add-button" (click)="openCreateModal()">
+    <span> + </span>
+  </button>
+</div>
+
+<div class="board-container">
+  <div class="board-list"
+    *ngIf="isSector('Corte')"
+    cdkDropList
+    id="corteList"
+    [cdkDropListData]="tasksCorte"
+    [cdkDropListConnectedTo]="['soldaList']"
+    (cdkDropListDropped)="drop($event)">
+    <h3>Corte</h3>
+    <div class="task-card" *ngFor="let task of tasksCorte" cdkDrag>
+      <div class="task-content">
+        {{ task.nomeEquipamento }}
+      </div>
+      <button class="details-icon" (click)="openModal(task)">
+        <span class="material-icons"> info </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="board-list"
+    *ngIf="isSector('Solda')"
+    cdkDropList
+    id="soldaList"
+    [cdkDropListData]="tasksSolda"
+    [cdkDropListConnectedTo]="['pinturaList']"
+    (cdkDropListDropped)="drop($event)">
+    <h3>Solda</h3>
+    <div class="task-card" *ngFor="let task of tasksSolda" cdkDrag>
+      <div class="task-content">
+        {{ task.nomeEquipamento }}
+      </div>
+      <button class="details-icon" (click)="openModal(task)">
+        <span class="material-icons"> info </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="board-list"
+    *ngIf="isSector('Pintura')"
+    cdkDropList
+    id="pinturaList"
+    [cdkDropListData]="tasksPintura"
+    [cdkDropListConnectedTo]="['montagemList']"
+    (cdkDropListDropped)="drop($event)">
+    <h3>Pintura</h3>
+    <div class="task-card" *ngFor="let task of tasksPintura" cdkDrag>
+      <div class="task-content">
+        {{ task.nomeEquipamento }}
+      </div>
+      <button class="details-icon" (click)="openModal(task)">
+        <span class="material-icons"> info </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="board-list"
+    *ngIf="isSector('Montagem')"
+    cdkDropList
+    id="montagemList"
+    [cdkDropListData]="tasksMontagem"
+    [cdkDropListConnectedTo]="['finalizadoList']"
+    (cdkDropListDropped)="drop($event)">
+    <h3>Montagem</h3>
+    <div class="task-card" *ngFor="let task of tasksMontagem" cdkDrag>
+      <div class="task-content">
+        {{ task.nomeEquipamento }}
+      </div>
+      <button class="details-icon" (click)="openModal(task)">
+        <span class="material-icons"> info </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="board-list"
+  *ngIf="isSector('Administrativo')"
+    cdkDropList
+    id="finalizadoList"
+    [cdkDropListData]="tasksFinalizado"
+    [cdkDropListConnectedTo]="[]"
+    (cdkDropListDropped)="drop($event)">
+    <h3>Finalizado</h3>
+    <div class="task-card" *ngFor="let task of tasksFinalizado" cdkDrag>
+      <div class="task-content">
+        {{ task.nomeEquipamento }}
+      </div>
+      <button class="details-icon" (click)="openModal(task)">
+        <span class="material-icons"> info </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show]="showModal" *ngIf="showModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Detalhes do Equipamento</h4>
+      <span class="close-button" (click)="closeModal()">&times;</span>
+    </div>
+    <div class="modal-body" *ngIf="selectedTask">
+      <p><strong>Equipamento:</strong> {{ selectedTask.nomeEquipamento }}</p>
+      <p><strong>Data de Lançamento:</strong> {{ selectedTask.dataLancamento | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+      <p><strong>Fechamento (Corte):</strong> {{ selectedTask.dataFechamentoCorte | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+      <p><strong>Fechamento (Solda):</strong> {{ selectedTask.dataFechamentoSolda | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+      <p><strong>Fechamento (Pintura):</strong> {{ selectedTask.dataFechamentoPintura | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+      <p><strong>Fechamento (Montagem):</strong> {{ selectedTask.dataFechamentoMontagem | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+
+      <hr>
+
+      <p><strong>Tempo (Corte &rarr; Solda):</strong> {{ calculateDurationInMinutes(selectedTask.dataFechamentoCorte, selectedTask.dataFechamentoSolda) }}</p>
+      <p><strong>Tempo (Solda &rarr; Pintura):</strong> {{ calculateDurationInMinutes(selectedTask.dataFechamentoSolda, selectedTask.dataFechamentoPintura) }}</p>
+      <p><strong>Tempo (Pintura &rarr; Montagem):</strong> {{ calculateDurationInMinutes(selectedTask.dataFechamentoPintura, selectedTask.dataFechamentoMontagem) }}</p>
+    </div>
+    <div class="modal-footer">
+      <button (click)="closeModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show]="showCreateModal" *ngIf="showCreateModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Adicionar Nova Montagem</h4>
+      <span class="close-button" (click)="closeCreateModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="equipamento-select">Equipamento:</label>
+        <select id="equipamento-select" [(ngModel)]="selectedEquipamentoId">
+          <option [ngValue]="null" disabled selected>Selecione um equipamento</option>
+          <option *ngFor="let equipamento of equipamentos" [ngValue]="equipamento.idEquipamento">
+            {{ equipamento.nomeEquipamento }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="closeCreateModal()">Cancelar</button>
+      <button (click)="adicionarEquipamento()">Salvar</button>
+    </div>
+  </div>
+</div>

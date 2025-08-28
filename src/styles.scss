@@ -1,0 +1,16 @@
+/* Estilos globais para reset básico, se ainda não tiver */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Garante que o body ocupa a altura total */
+  overflow-x: hidden; /* Evita scroll horizontal indesejado */
+}
+
+body {
+  font-family: 'Roboto', sans-serif; /* Aplica a fonte Roboto a todo o corpo */
+  color: #333; /* Cor de texto padrão */
+  line-height: 1.6; /* Espaçamento entre linhas para melhor legibilidade */
+  background-color: #f0f2f5; /* Cor de fundo geral do app */
+}
+
+/* Outros estilos globais aqui */

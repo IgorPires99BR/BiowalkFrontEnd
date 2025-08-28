@@ -1,0 +1,412 @@
+/* src/app/home/home.component.css */
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #2c3e50; /* Cor escura para o header */
+  color: #ecf0f1;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #3498db; /* Azul para o logo */
+}
+
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Para os itens de menu ficarem lado a lado */
+}
+
+.main-nav li {
+  position: relative; /* Necessário para o posicionamento do submenu */
+  margin-left: 30px;
+}
+
+.main-nav a {
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 8px 15px;
+  display: block; /* Para o padding funcionar em toda a área do link */
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+.main-nav a:hover,
+.main-nav a.active-link { /* Estilo para o link ativo */
+  background-color: #34495e;
+}
+
+/* Estilo para o submenu */
+.has-submenu .submenu {
+  display: none; /* Esconde o submenu por padrão */
+  position: absolute;
+  background-color: #34495e; /* Fundo do submenu */
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1; /* Garante que o submenu fique acima de outros elementos */
+  top: 100%; /* Posiciona abaixo do item pai */
+  left: 0;
+  border-radius: 4px;
+  padding: 10px 0;
+}
+
+.has-submenu:hover .submenu {
+  display: block; /* Mostra o submenu ao passar o mouse */
+}
+
+.submenu li {
+  margin: 0; /* Remove margem dos itens do submenu */
+}
+
+.submenu a {
+  padding: 10px 20px; /* Padding ajustado para submenus */
+  white-space: nowrap; /* Previne quebras de linha */
+}
+
+.submenu a:hover {
+  background-color: #2c3e50;
+}
+
+.arrow {
+  margin-left: 5px;
+  font-size: 0.8em;
+}
+
+.user-actions button {
+  background-color: #e74c3c; /* Cor para o botão Sair */
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-actions button:hover {
+  background-color: #c0392b;
+}
+
+.content-area {
+  flex-grow: 1; /* Faz com que a área de conteúdo ocupe o espaço restante */
+  padding: 20px;
+  background-color: #f8f9fa;
+  display: flex; /* Para centralizar o conteúdo se quiser */
+  justify-content: center;
+  align-items: flex-start; /* Alinha o conteúdo ao topo */
+}
+
+.board-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.board-list {
+  width: 300px;
+  min-height: 400px;
+  background-color: #f4f5f7;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.task-card {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: grab;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+}
+
+/* Estilos para o item sendo arrastado */
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Estilo para o espaço vazio deixado pelo item arrastado */
+.cdk-drag-placeholder {
+  opacity: 0.2;
+}
+
+/* Estilo quando a lista pode receber um item */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+box-sizing: border-box;
+border-radius: 4px;
+box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Estilos para a Modal */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50px);
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-header h4 {
+  margin: 0;
+}
+
+.close-button {
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.close-button:hover {
+  color: black;
+}
+
+.modal-body p {
+  margin: 5px 0;
+}
+
+.modal-footer {
+  text-align: right;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  margin-top: 15px;
+}
+
+.modal-footer button {
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-footer button:hover {
+  background-color: #e0e0e0;
+}
+
+.add-button-container {
+  width: 100%;
+  text-align: right;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+/* Estilos para o Card e o Ícone */
+.task-card {
+  position: relative; /* Para posicionar o ícone de forma absoluta */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* ... outros estilos do task-card ... */
+}
+
+.details-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.details-icon:hover {
+  background-color: #eee;
+  color: #3498db;
+}
+
+/* Estilos para a Modal */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50px);
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-header h4 {
+  margin: 0;
+}
+
+.close-button {
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.close-button:hover {
+  color: black;
+}
+
+.modal-body p {
+  margin: 5px 0;
+}
+
+.modal-footer {
+  text-align: right;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  margin-top: 15px;
+}
+
+.modal-footer button {
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-footer button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Novidades */
+.app-header .user-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-button {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.add-button:hover {
+  transform: scale(1.1);
+}
+
+.save-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #2980b9;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
