@@ -15,6 +15,38 @@
   </button>
 </div>
 
+<div class="filter-container">
+  <div class="filter-group">
+    <label for="filter-date">Data de Lançamento:</label>
+    <input type="date" id="filter-date" class="filter-input">
+  </div>
+  <div class="filter-group">
+    <label for="filter-equipamento">Tipo de Equipamento:</label>
+    <select id="filter-equipamento" class="filter-input">
+      <option value="">Todos</option>
+      <option value="Esteira">Esteira Biowalk V2</option>
+      <option value="Bicicleta">Bicicleta Ergonomica Biowalk</option>
+      <option value="Escada">Escada</option>
+      </select>
+  </div>
+  <div class="filter-group">
+    <label for="filter-status">Status:</label>
+    <select id="filter-status" class="filter-input">
+      <option value="">Todos</option>
+      <option value="Corte">Corte</option>
+      <option value="Solda">Solda</option>
+      <option value="Pintura">Pintura</option>
+      <option value="Montagem">Montagem</option>
+      <option value="Finalizado">Finalizado</option>
+    </select>
+  </div>
+</div>
+
+<div class="finalizado-toggle-container">
+    <label for="toggle-finalizado">Ocultar Finalizados</label>
+    <input type="checkbox" id="toggle-finalizado" (change)="toggleFinalizadoBoard($event)">
+</div>
+
 <div class="board-container">
   <div class="board-list"
     *ngIf="isSector('Corte')"
@@ -89,7 +121,7 @@
   </div>
 
   <div class="board-list"
-  *ngIf="isSector('Administrativo')"
+  *ngIf="isSector('Administrativo') && showFinalizadoBoard"
     cdkDropList
     id="finalizadoList"
     [cdkDropListData]="tasksFinalizado"

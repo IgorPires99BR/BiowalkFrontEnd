@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   tasksPintura: EquipamentoMontagemDto[] = [];
   tasksMontagem: EquipamentoMontagemDto[] = [];
   tasksFinalizado: EquipamentoMontagemDto[] = [];
+  public showFinalizadoBoard: boolean = true;
 
   showModal = false;
   selectedTask: EquipamentoMontagemDto | null = null;
@@ -91,6 +92,13 @@ export class HomeComponent implements OnInit {
         return null;
     }
   }
+
+toggleFinalizadoBoard(event: any) {
+  // A propriedade 'checked' do evento de input indica se o checkbox está marcado.
+  // Se estiver 'true' (marcado), 'showFinalizadoBoard' se torna 'false' (oculta o board).
+  // Se estiver 'false' (desmarcado), 'showFinalizadoBoard' se torna 'true' (exibe o board).
+  this.showFinalizadoBoard = !event.target.checked;
+}
 
   // Lógica de verificação para exibir o setor do usuário, o próximo setor, E todos os boards para 'Administrativo'
   isSector(sectorName: string): boolean {

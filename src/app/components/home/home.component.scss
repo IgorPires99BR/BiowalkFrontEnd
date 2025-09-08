@@ -108,9 +108,12 @@
 }
 
 .board-container {
-  display: flex;
-  gap: 20px;
+  display: flex; /* Transforma o contêiner em um Flexbox */
+  flex-wrap: wrap; /* Permite que os boards quebrem para a próxima linha em telas pequenas */
+  justify-content: center; /* Centraliza os boards horizontalmente */
+  gap: 20px; /* Adiciona um espaço entre os boards */
   padding: 20px;
+  margin-top: 20px; /* Um espaço superior para separar dos filtros */
 }
 
 .board-list {
@@ -240,12 +243,11 @@ box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14
 }
 
 .add-button-container {
-  width: 100%;
-  text-align: right;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  display: flex; /* Define o container como um flexbox */
+  justify-content: center; /* Centraliza os itens horizontalmente no eixo principal */
+  align-items: center; /* Centraliza os itens verticalmente */
+  margin-top: 20px; /* Opcional: Adiciona um espaçamento do topo para não ficar colado no header */
 }
-
 
 /* Estilos para o Card e o Ícone */
 .task-card {
@@ -409,4 +411,43 @@ box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14
   border-radius: 4px;
   border: 1px solid #ccc;
   box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
+
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas pequenas */
+  justify-content: center;
+  gap: 20px; /* Espaço entre cada grupo de filtro */
+  padding: 20px;
+  background-color: #f0f0f0; /* Um cinza claro para destacar a seção */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin: 20px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.filter-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #555;
+  outline: none;
+  transition: border-color 0.3s ease;
+  min-width: 180px; /* Garante que os campos tenham um tamanho mínimo */
+}
+
+.filter-input:focus {
+  border-color: #007bff; /* Cor do foco para um feedback visual */
 }
