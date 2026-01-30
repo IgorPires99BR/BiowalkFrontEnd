@@ -104,8 +104,9 @@
   background-color: #f8f9fa;
   display: flex; /* Para centralizar o conteúdo se quiser */
   justify-content: center;
-  align-items: flex-start; /* Alinha o conteúdo ao topo */
-}
+  align-items: flex-start;
+ /* Alinha o conteúdo ao topo */
+} 
 
 .board-container {
   display: flex; /* Transforma o contêiner em um Flexbox */
